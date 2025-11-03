@@ -18,8 +18,7 @@ public class ConsumerEntity {
 
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "consumer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private WalletEntity wallet;
 
     public ConsumerEntity() {
@@ -52,7 +51,7 @@ public class ConsumerEntity {
         return password;
     }
 
-    public void setWallet(WalletEntity wallet) {
-        this.wallet = wallet;
-    }
+//    public void setWallet(WalletEntity wallet) {
+//        this.wallet = wallet;
+//    }
 }

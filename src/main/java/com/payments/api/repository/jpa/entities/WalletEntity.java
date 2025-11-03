@@ -1,5 +1,6 @@
 package com.payments.api.repository.jpa.entities;
 
+import com.payments.api.core.entities.identity.Consumer;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,8 +11,9 @@ public class WalletEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(mappedBy = "wallet")
-    private ConsumerEntity consumers;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "consumer_id", referencedColumnName = "id")
+    private ConsumerEntity consumer;
 
     private double balance;
 
@@ -21,12 +23,13 @@ public class WalletEntity {
 
     public WalletEntity() {}
 
-    private WalletEntity(final double balance, final LocalDateTime createdAt) {
+    private WalletEntity(final double balance, final LocalDateTime createdAt, final ConsumerEntity consumer) {
         this.balance = balance;
         this.createdAt = createdAt;
+        this.consumer = consumer;
     }
 
-    public static WalletEntity withBalanceZero() {
-        return new WalletEntity(0, LocalDateTime.now());
+    public static WalletEntity withBalanceZero(final ConsumerEntity consumer) {
+        return new WalletEntity(0, LocalDateTime.now(), consumer);
     }
 }

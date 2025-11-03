@@ -2,6 +2,7 @@ package com.payments.api.repository;
 
 import com.payments.api.core.entities.identity.Consumer;
 import com.payments.api.repository.jpa.ConsumerJpaRepository;
+import com.payments.api.repository.jpa.WalletJpaRepository;
 import com.payments.api.repository.jpa.entities.ConsumerEntity;
 import com.payments.api.repository.jpa.entities.WalletEntity;
 import com.payments.api.repository.mapper.ConsumerDbMapper;
@@ -13,14 +14,18 @@ import java.util.Optional;
 @Repository
 public class ConsumerRepository {
 
-    private final ConsumerJpaRepository jpaRepository;
+    private final ConsumerJpaRepository consumerJpaRepository;
 
-    public ConsumerRepository(final ConsumerJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
+    private final WalletJpaRepository walletJpaRepository;
+
+    public ConsumerRepository(final ConsumerJpaRepository consumerJpaRepository,
+                              final WalletJpaRepository walletJpaRepository) {
+        this.consumerJpaRepository = consumerJpaRepository;
+        this.walletJpaRepository = walletJpaRepository;
     }
 
     public List<Consumer> findAll() {
-        List<ConsumerEntity> consumers = jpaRepository.findAll();
+        List<ConsumerEntity> consumers = consumerJpaRepository.findAll();
 
         // TODO streams
         return consumers
@@ -30,18 +35,19 @@ public class ConsumerRepository {
     }
 
     public Long save(Consumer consumer) {
-        WalletEntity wallet = WalletEntity.withBalanceZero();
-
         ConsumerEntity consumerEntity = ConsumerDbMapper.toEntity(consumer);
-        consumerEntity.setWallet(wallet);
 
-        ConsumerEntity savedConsumer = jpaRepository.save(consumerEntity);
+        WalletEntity wallet = WalletEntity.withBalanceZero(consumerEntity);
+
+        walletJpaRepository.save(wallet);
+
+        ConsumerEntity savedConsumer = consumerJpaRepository.save(consumerEntity);
 
         return savedConsumer.getId();
     }
 
     public Optional<Consumer> findByDocument(Consumer consumer) {
-        return jpaRepository
+        return consumerJpaRepository
             .findByDocument(consumer.getDocument())
             .map(ConsumerDbMapper::toDomain);
     }
