@@ -6,7 +6,7 @@ public class Password {
     private final String key;
 
     private Password(final String key) {
-        requireNonNull(key, "Key can't be null");
+        requireNonNull(key, "Password key can't be null");
 
         if (!isValidKey(key)) {
             throw new IllegalArgumentException("The password does not meet the minimum security requirements");

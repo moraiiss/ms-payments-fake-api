@@ -29,8 +29,6 @@ public class CPF {
             return false;
         }
 
-        //String cpf = number.replaceAll("[^0-9]", "");
-
 
         if (number.length() != 11) {
             return false;
