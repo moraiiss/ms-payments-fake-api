@@ -1,34 +1,37 @@
-package com.payments.api.core.entities;
+package com.payments.api.core.entities.identity;
 
-import com.payments.api.core.entities.contracts.Payee;
-import com.payments.api.core.entities.contracts.Payer;
+import com.payments.api.core.entities.payments.Payee;
+import com.payments.api.core.entities.payments.Payer;
+import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.vo.CPF;
 
 import static java.util.Objects.requireNonNull;
 
 public class Consumer implements Payer, Payee {
 
-    private UserIdentity userIdentity;
-    private Credentials credentials;
-    private Wallet wallet;
+    private final String name;
 
-    private Consumer(final UserIdentity userIdentity, final Credentials credentials, final Wallet wallet) {
-        requireNonNull(userIdentity, "User identity data can't be null");
+    private final Document document;
+
+    private final Credentials credentials;
+
+    private final Wallet wallet;
+
+    private Consumer(final String name, final Document document, final Credentials credentials, final Wallet wallet) {
+        requireNonNull(name, "Name is required!");
+        requireNonNull(document, "Document is required!");
         requireNonNull(credentials, "Auth user data can't be null");
         requireNonNull(wallet, "Wallet data can't be null");
 
-        this.userIdentity = userIdentity;
+        this.name = name;
+        this.document = document;
         this.credentials = credentials;
         this.wallet = wallet;
     }
 
     public static Consumer of(final String name, final String document, final String emailAddress,
                               final String passwordKey) {
-        return new Consumer(
-            UserIdentity.of(name, CPF.of(document)),
-            Credentials.of(emailAddress, passwordKey),
-            Wallet.of()
-        );
+        return new Consumer(name, CPF.of(document), Credentials.of(emailAddress, passwordKey), Wallet.of());
     }
 
     @Override
@@ -42,11 +45,11 @@ public class Consumer implements Payer, Payee {
     }
 
     public String getName() {
-        return this.userIdentity.getName();
+        return this.name;
     }
 
     public String getDocument() {
-        return userIdentity.getDocument();
+        return document.getNumber();
     }
 
     public String getEmail() {

@@ -1,6 +1,6 @@
 package com.payments.api.repository;
 
-import com.payments.api.core.entities.Consumer;
+import com.payments.api.core.entities.identity.Consumer;
 import com.payments.api.repository.jpa.ConsumerJpaRepository;
 import com.payments.api.repository.jpa.entities.ConsumerEntity;
 import com.payments.api.repository.jpa.entities.WalletEntity;

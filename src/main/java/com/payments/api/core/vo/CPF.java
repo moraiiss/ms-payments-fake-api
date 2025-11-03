@@ -1,12 +1,12 @@
 package com.payments.api.core.vo;
 
-import com.payments.api.core.entities.contracts.Document;
+import com.payments.api.core.entities.identity.Document;
 
 import static java.util.Objects.requireNonNull;
 
 public class CPF implements Document {
 
-    private String number;
+    private final String number;
 
     private CPF(final String number) {
 

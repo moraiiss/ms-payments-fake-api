@@ -1,6 +1,6 @@
-package com.payments.api.service;
+package com.payments.api.usecases;
 
-import com.payments.api.core.entities.Consumer;
+import com.payments.api.core.entities.identity.Consumer;
 import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +9,11 @@ import java.util.Optional;
 
 // TODO diferença entre usaCase x Service
 @Service
-public class ConsumerService {
+public class ConsumerUseCase {
 
     private final ConsumerRepository repository;
 
-    public ConsumerService(final ConsumerRepository repository) {
+    public ConsumerUseCase(final ConsumerRepository repository) {
         this.repository = repository;
     }
 

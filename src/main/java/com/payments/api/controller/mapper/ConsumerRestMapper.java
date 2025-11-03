@@ -1,7 +1,7 @@
 package com.payments.api.controller.mapper;
 
 import com.payments.api.controller.dto.ConsumerRequestDto;
-import com.payments.api.core.entities.Consumer;
+import com.payments.api.core.entities.identity.Consumer;
 
 public final class ConsumerRestMapper {
 

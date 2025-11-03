@@ -19,9 +19,9 @@ spring:
       hibernate:
         format_sql: true
 
-management:
-  otlp:
-    metrics:
-      export:
-        url: http://localhost:4318/v1/metrics
-        step: 10s
+#management:
+#  otlp:
+#    metrics:
+#      export:
+#        url: http://localhost:4318/v1/metrics
+#        step: 10s

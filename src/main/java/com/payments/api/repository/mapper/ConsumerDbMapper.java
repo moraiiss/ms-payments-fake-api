@@ -1,6 +1,6 @@
 package com.payments.api.repository.mapper;
 
-import com.payments.api.core.entities.Consumer;
+import com.payments.api.core.entities.identity.Consumer;
 import com.payments.api.repository.jpa.entities.ConsumerEntity;
 
 public final class ConsumerDbMapper {

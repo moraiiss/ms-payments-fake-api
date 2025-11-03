@@ -1,4 +1,4 @@
-package com.payments.api.core.entities;
+package com.payments.api.core.entities.payments;
 
 import com.payments.api.core.exceptions.InsufficientBalanceException;
 
@@ -9,7 +9,7 @@ public class Wallet {
     // TODO rever double x BigDecimal
     private double balance;
 
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 

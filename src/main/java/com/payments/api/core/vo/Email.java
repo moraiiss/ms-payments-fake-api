@@ -12,7 +12,7 @@ public class Email {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    private String address;
+    private final String address;
 
     private Email(final String address) {
 

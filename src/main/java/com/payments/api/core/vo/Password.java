@@ -3,7 +3,7 @@ package com.payments.api.core.vo;
 import static java.util.Objects.requireNonNull;
 
 public class Password {
-    private String key;
+    private final String key;
 
     private Password(final String key) {
         requireNonNull(key, "Key can't be null");

@@ -1,6 +1,5 @@
 package com.payments.api.repository.jpa;
 
-import com.payments.api.core.entities.Consumer;
 import com.payments.api.repository.jpa.entities.ConsumerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

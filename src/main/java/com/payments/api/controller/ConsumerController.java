@@ -2,8 +2,8 @@ package com.payments.api.controller;
 
 import com.payments.api.controller.dto.ConsumerRequestDto;
 import com.payments.api.controller.mapper.ConsumerRestMapper;
-import com.payments.api.core.entities.Consumer;
-import com.payments.api.service.ConsumerService;
+import com.payments.api.core.entities.identity.Consumer;
+import com.payments.api.usecases.ConsumerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("consumers")
 public class ConsumerController {
 
-    private final ConsumerService service;
+    private final ConsumerUseCase service;
 
-    public ConsumerController(final ConsumerService consumerService) {
+    public ConsumerController(final ConsumerUseCase consumerService) {
         this.service = consumerService;
     }
 

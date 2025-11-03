@@ -1,6 +1,6 @@
 package com.payments.api.repository.mapper;
 
-import com.payments.api.core.entities.Seller;
+import com.payments.api.core.entities.identity.Seller;
 import com.payments.api.repository.jpa.entities.SellerEntity;
 
 public final class SellerDbMapper {

@@ -1,4 +1,4 @@
-package com.payments.api.core.entities;
+package com.payments.api.core.entities.identity;
 
 import com.payments.api.core.vo.Email;
 import com.payments.api.core.vo.Password;
@@ -6,8 +6,10 @@ import com.payments.api.core.vo.Password;
 import static java.util.Objects.requireNonNull;
 
 public class Credentials {
-    private Email email;
-    private Password password;
+
+    private final Email email;
+
+    private final Password password;
 
     private Credentials(final Email email, final Password password) {
 
