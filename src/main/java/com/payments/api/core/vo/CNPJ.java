@@ -1,10 +1,8 @@
 package com.payments.api.core.vo;
 
-import com.payments.api.core.entities.identity.Document;
-
 import static java.util.Objects.requireNonNull;
 
-public class CNPJ implements Document {
+public class CNPJ {
 
     private final String number;
 
@@ -23,7 +21,6 @@ public class CNPJ implements Document {
         return new CNPJ(number);
     }
 
-    @Override
     public boolean isValid(final String number) {
 
         if (number == null) {
@@ -73,7 +70,6 @@ public class CNPJ implements Document {
         }
     }
 
-    @Override
     public String getNumber() {
         return this.number;
     }

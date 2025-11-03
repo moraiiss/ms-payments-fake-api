@@ -1,10 +1,8 @@
 package com.payments.api.core.vo;
 
-import com.payments.api.core.entities.identity.Document;
-
 import static java.util.Objects.requireNonNull;
 
-public class CPF implements Document {
+public class CPF {
 
     private final String number;
 
@@ -12,32 +10,33 @@ public class CPF implements Document {
 
         requireNonNull(number, "Document number can't be null");
 
-        if (!isValid(number)) {
+        String cpf = number.replaceAll("[^0-9]", "");
+
+        if (!isValid(cpf)) {
             throw new IllegalArgumentException("CPF number is not valid");
         }
 
-        this.number = number;
+        this.number = cpf;
     }
 
     public static CPF of(final String number) {
         return new CPF(number);
     }
 
-    @Override
     public boolean isValid(final String number) {
 
         if (number == null) {
             return false;
         }
 
-        String cpf = number.replaceAll("[^0-9]", "");
+        //String cpf = number.replaceAll("[^0-9]", "");
 
 
-        if (cpf.length() != 11) {
+        if (number.length() != 11) {
             return false;
         }
 
-        if (cpf.matches("(\\d)\\1{10}")) {
+        if (number.matches("(\\d)\\1{10}")) {
             return false;
         }
 
@@ -45,7 +44,7 @@ public class CPF implements Document {
             // Calcula o primeiro dígito verificador
             int sum = 0;
             for (int i = 0; i < 9; i++) {
-                sum += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
+                sum += Character.getNumericValue(number.charAt(i)) * (10 - i);
             }
             int firstDigit = 11 - (sum % 11);
             if (firstDigit >= 10) {
@@ -53,14 +52,14 @@ public class CPF implements Document {
             }
 
             // Verifica o primeiro dígito
-            if (firstDigit != Character.getNumericValue(cpf.charAt(9))) {
+            if (firstDigit != Character.getNumericValue(number.charAt(9))) {
                 return false;
             }
 
             // Calcula o segundo dígito verificador
             sum = 0;
             for (int i = 0; i < 10; i++) {
-                sum += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+                sum += Character.getNumericValue(number.charAt(i)) * (11 - i);
             }
             int secondDigit = 11 - (sum % 11);
             if (secondDigit >= 10) {
@@ -68,14 +67,13 @@ public class CPF implements Document {
             }
 
             // Verifica o segundo dígito
-            return secondDigit == Character.getNumericValue(cpf.charAt(10));
+            return secondDigit == Character.getNumericValue(number.charAt(10));
 
         } catch (Exception e) {
             return false;
         }
     }
 
-    @Override
     public String getNumber() {
         return this.number;
     }

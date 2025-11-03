@@ -12,7 +12,6 @@ public class Credentials {
     private final Password password;
 
     private Credentials(final Email email, final Password password) {
-
         requireNonNull(email, "Email can't be null");
         requireNonNull(password, "Password can't be null");
 

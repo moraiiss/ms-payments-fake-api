@@ -10,7 +10,9 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String socialReason;
+
+    private String fantasyName;
 
     @Column(unique = true)
     private String document;
@@ -26,8 +28,10 @@ public class SellerEntity {
 
     public SellerEntity() {}
 
-    public SellerEntity(String name, String document, String email, String password) {
-        this.name = name;
+    public SellerEntity(final String socialReason, final String fantasyName, final String document, final String email,
+                        final String password) {
+        this.socialReason = socialReason;
+        this.fantasyName = fantasyName;
         this.document = document;
         this.email = email;
         this.password = password;
@@ -37,8 +41,12 @@ public class SellerEntity {
         this.wallet = wallet;
     }
 
-    public String getName() {
-        return name;
+    public String getSocialReason() {
+        return socialReason;
+    }
+
+    public String getFantasyName() {
+        return fantasyName;
     }
 
     public String getDocument() {

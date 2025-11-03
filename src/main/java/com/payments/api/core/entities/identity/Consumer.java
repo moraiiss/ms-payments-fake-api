@@ -11,13 +11,13 @@ public class Consumer implements Payer, Payee {
 
     private final String name;
 
-    private final Document document;
+    private final CPF document;
 
     private final Credentials credentials;
 
     private final Wallet wallet;
 
-    private Consumer(final String name, final Document document, final Credentials credentials, final Wallet wallet) {
+    private Consumer(final String name, final CPF document, final Credentials credentials, final Wallet wallet) {
         requireNonNull(name, "Name is required!");
         requireNonNull(document, "Document is required!");
         requireNonNull(credentials, "Auth user data can't be null");

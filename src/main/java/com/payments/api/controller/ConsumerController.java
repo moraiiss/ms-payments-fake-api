@@ -1,8 +1,8 @@
 package com.payments.api.controller;
 
 import com.payments.api.controller.dto.ConsumerRequestDto;
+import com.payments.api.controller.dto.ConsumerResponseDto;
 import com.payments.api.controller.mapper.ConsumerRestMapper;
-import com.payments.api.core.entities.identity.Consumer;
 import com.payments.api.usecases.ConsumerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +22,17 @@ public class ConsumerController {
 
     // TODO entender o ResponseEntity por debaixo dos panos
     @GetMapping
-    public ResponseEntity<List<Consumer>> index() {
-        return ResponseEntity.ok(service.listConsumers());
+    public ResponseEntity<List<ConsumerResponseDto>> index() {
+        List<ConsumerResponseDto> consumers = service.listConsumers()
+            .stream()
+            .map(ConsumerRestMapper::toDto)
+            .toList();
+
+        return ResponseEntity.ok(consumers);
     }
 
     @PostMapping
-    public ResponseEntity<String> create(
-        @RequestBody ConsumerRequestDto requestBody
-    ) {
+    public ResponseEntity<String> create(@RequestBody ConsumerRequestDto requestBody) {
         var consumerId = service
             .createConsumer(ConsumerRestMapper.toDomain(requestBody));
 

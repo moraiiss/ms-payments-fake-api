@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// TODO diferença entre usaCase x Service
 @Service
 public class ConsumerUseCase {
 

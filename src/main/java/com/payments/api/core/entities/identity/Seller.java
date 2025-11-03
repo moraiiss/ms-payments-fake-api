@@ -12,15 +12,14 @@ public class Seller implements Payee {
 
     private final String fantasyName;
 
-    private final Document document;
+    private final CNPJ document;
 
     private final Credentials credentials;
 
     private final Wallet wallet;
 
-    private Seller(final String socialReason, final String fantasyName, final Document document,
+    private Seller(final String socialReason, final String fantasyName, final CNPJ document,
                    final Credentials credentials, final Wallet wallet) {
-
         requireNonNull(socialReason, "Social Reason is required");
         requireNonNull(document, "Document is required");
         requireNonNull(credentials, "Auth user data can't be null");
