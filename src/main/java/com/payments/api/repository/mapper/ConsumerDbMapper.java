@@ -8,7 +8,8 @@ public final class ConsumerDbMapper {
     private ConsumerDbMapper() {}
 
     public static Consumer toDomain(ConsumerEntity entity) {
-        return Consumer.of(entity.getName(), entity.getDocument(), entity.getEmail(), entity.getPassword());
+        return Consumer.of(entity.getId(), entity.getName(), entity.getDocument(), entity.getEmail(),
+            entity.getPassword());
     }
 
     public static ConsumerEntity toEntity(Consumer consumer) {

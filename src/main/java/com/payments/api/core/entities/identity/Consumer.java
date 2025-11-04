@@ -9,6 +9,8 @@ import static java.util.Objects.requireNonNull;
 
 public class Consumer implements Payer, Payee {
 
+    private final Long id;
+
     private final String name;
 
     private final CPF document;
@@ -17,21 +19,23 @@ public class Consumer implements Payer, Payee {
 
     private final Wallet wallet;
 
-    private Consumer(final String name, final CPF document, final Credentials credentials, final Wallet wallet) {
+    private Consumer(final Long id, final String name, final CPF document, final Credentials credentials,
+                     final Wallet wallet) {
         requireNonNull(name, "Name is required!");
         requireNonNull(document, "Document is required!");
         requireNonNull(credentials, "Auth user data can't be null");
         requireNonNull(wallet, "Wallet data can't be null");
 
+        this.id = id;
         this.name = name;
         this.document = document;
         this.credentials = credentials;
         this.wallet = wallet;
     }
 
-    public static Consumer of(final String name, final String document, final String emailAddress,
+    public static Consumer of(final Long id, final String name, final String document, final String emailAddress,
                               final String passwordKey) {
-        return new Consumer(name, CPF.of(document), Credentials.of(emailAddress, passwordKey), Wallet.of());
+        return new Consumer(id, name, CPF.of(document), Credentials.of(emailAddress, passwordKey), Wallet.of());
     }
 
     @Override
@@ -42,6 +46,10 @@ public class Consumer implements Payer, Payee {
     @Override
     public void debit(double value) {
         this.wallet.debit(value);
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     public String getName() {
