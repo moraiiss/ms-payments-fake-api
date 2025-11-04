@@ -50,8 +50,4 @@ public class ConsumerEntity {
     public String getPassword() {
         return password;
     }
-
-//    public void setWallet(WalletEntity wallet) {
-//        this.wallet = wallet;
-//    }
 }

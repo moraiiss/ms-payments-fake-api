@@ -26,6 +26,8 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-actuator:3.5.6")
 //    implementation("io.micrometer:micrometer-registry-otlp:1.15.5")
 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+
     runtimeOnly("org.postgresql:postgresql:42.7.8")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

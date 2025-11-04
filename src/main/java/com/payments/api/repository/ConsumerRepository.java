@@ -38,7 +38,6 @@ public class ConsumerRepository {
         ConsumerEntity consumerEntity = ConsumerDbMapper.toEntity(consumer);
 
         WalletEntity wallet = WalletEntity.withBalanceZero(consumerEntity);
-
         walletJpaRepository.save(wallet);
 
         ConsumerEntity savedConsumer = consumerJpaRepository.save(consumerEntity);
@@ -49,6 +48,12 @@ public class ConsumerRepository {
     public Optional<Consumer> findByDocument(Consumer consumer) {
         return consumerJpaRepository
             .findByDocument(consumer.getDocument())
+            .map(ConsumerDbMapper::toDomain);
+    }
+
+    public Optional<Consumer> findByEmail(Consumer consumer) {
+        return consumerJpaRepository
+            .findByEmail(consumer.getEmail())
             .map(ConsumerDbMapper::toDomain);
     }
 }

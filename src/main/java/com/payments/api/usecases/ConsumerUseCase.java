@@ -5,7 +5,6 @@ import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ConsumerUseCase {
@@ -22,16 +21,27 @@ public class ConsumerUseCase {
 
     public Long createConsumer(Consumer consumer) {
 
-        Optional<Consumer> foundConsumer = this.findConsumer(consumer);
+        boolean hasConsumerDocument = this.findConsumerByDocument(consumer);
 
-        if (foundConsumer.isPresent()) {
+        if (hasConsumerDocument) {
             throw new IllegalArgumentException("Already exists a consumer with this document");
+        }
+
+        boolean hasConsumerEmail = this.findConsumerByEmail(consumer);
+
+        if (hasConsumerEmail) {
+            throw new IllegalArgumentException("Already exists a consumer with this email");
         }
 
         return repository.save(consumer);
     }
 
-    private Optional<Consumer> findConsumer(Consumer consumer) {
-        return repository.findByDocument(consumer);
+    private boolean findConsumerByDocument(Consumer consumer) {
+        return repository.findByDocument(consumer).isPresent();
+    }
+
+    private boolean findConsumerByEmail(Consumer consumer) {
+        return repository.findByEmail(consumer)
+            .isPresent();
     }
 }

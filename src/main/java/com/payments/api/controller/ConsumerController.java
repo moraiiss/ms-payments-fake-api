@@ -4,6 +4,8 @@ import com.payments.api.controller.dto.ConsumerRequestDto;
 import com.payments.api.controller.dto.ConsumerResponseDto;
 import com.payments.api.controller.mapper.ConsumerRestMapper;
 import com.payments.api.usecases.ConsumerUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Consumers", description = "Endpoints for manager consumers data")
 @RequestMapping("consumers")
 public class ConsumerController {
 
@@ -20,8 +23,12 @@ public class ConsumerController {
         this.service = consumerService;
     }
 
-    // TODO entender o ResponseEntity por debaixo dos panos
+    // TODO sobre ResponseEntity
     @GetMapping
+    @Operation(
+        summary = "List all consumers",
+        description = "Retrieve a list of all consumers in the system"
+    )
     public ResponseEntity<List<ConsumerResponseDto>> index() {
         List<ConsumerResponseDto> consumers = service.listConsumers()
             .stream()
@@ -32,6 +39,10 @@ public class ConsumerController {
     }
 
     @PostMapping
+    @Operation(
+        summary = "Create a new consumer",
+        description = "Create a new consumer with the provided information"
+    )
     public ResponseEntity<String> create(@RequestBody ConsumerRequestDto requestBody) {
         var consumerId = service
             .createConsumer(ConsumerRestMapper.toDomain(requestBody));
