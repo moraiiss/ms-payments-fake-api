@@ -2,6 +2,8 @@ package com.payments.api.repository.jpa.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 // TODO uso do lombok
 @Entity(name = "sellers")
 public class SellerEntity {
@@ -10,21 +12,34 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String socialReason;
 
     private String fantasyName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String document;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
-    private WalletEntity wallet;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PostPersist
+    protected  void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public SellerEntity() {}
 
@@ -37,8 +52,8 @@ public class SellerEntity {
         this.password = password;
     }
 
-    public void setWallet(WalletEntity wallet) {
-        this.wallet = wallet;
+    public Long getId() {
+        return id;
     }
 
     public String getSocialReason() {
