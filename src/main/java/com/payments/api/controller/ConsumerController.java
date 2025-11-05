@@ -44,7 +44,7 @@ public class ConsumerController {
         description = "Create a new consumer with the provided information"
     )
     public ResponseEntity<String> create(@RequestBody ConsumerRequestDto requestBody) {
-        var consumerId = service
+        Long consumerId = service
             .createConsumer(ConsumerRestMapper.toDomain(requestBody));
 
         return ResponseEntity

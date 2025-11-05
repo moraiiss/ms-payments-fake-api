@@ -10,11 +10,13 @@ public class CNPJ {
 
         requireNonNull(number, "Document number can't be null");
 
-        if (!isValid(number)) {
+        String cnpj = number.replaceAll("[^0-9]", "");
+
+        if (!isValid(cnpj)) {
             throw new IllegalArgumentException("CNPJ number is not valid");
         }
 
-        this.number = number;
+        this.number = cnpj;
     }
 
     public static CNPJ of(final String number) {
@@ -27,14 +29,12 @@ public class CNPJ {
             return false;
         }
 
-        String cnpj = number.replaceAll("[^0-9]", "");
 
-
-        if (cnpj.length() != 14) {
+        if (number.length() != 14) {
             return false;
         }
 
-        if (cnpj.matches("(\\d)\\1{13}")) {
+        if (number.matches("(\\d)\\1{13}")) {
             return false;
         }
 
@@ -43,13 +43,13 @@ public class CNPJ {
             int sum = 0;
             int[] weights1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
             for (int i = 0; i < 12; i++) {
-                sum += Character.getNumericValue(cnpj.charAt(i)) * weights1[i];
+                sum += Character.getNumericValue(number.charAt(i)) * weights1[i];
             }
             int firstDigit = sum % 11;
             firstDigit = (firstDigit < 2) ? 0 : 11 - firstDigit;
 
             // Verifica o primeiro dígito
-            if (firstDigit != Character.getNumericValue(cnpj.charAt(12))) {
+            if (firstDigit != Character.getNumericValue(number.charAt(12))) {
                 return false;
             }
 
@@ -57,13 +57,13 @@ public class CNPJ {
             sum = 0;
             int[] weights2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
             for (int i = 0; i < 13; i++) {
-                sum += Character.getNumericValue(cnpj.charAt(i)) * weights2[i];
+                sum += Character.getNumericValue(number.charAt(i)) * weights2[i];
             }
             int secondDigit = sum % 11;
             secondDigit = (secondDigit < 2) ? 0 : 11 - secondDigit;
 
             // Verifica o segundo dígito
-            return secondDigit == Character.getNumericValue(cnpj.charAt(13));
+            return secondDigit == Character.getNumericValue(number.charAt(13));
 
         } catch (Exception e) {
             return false;
