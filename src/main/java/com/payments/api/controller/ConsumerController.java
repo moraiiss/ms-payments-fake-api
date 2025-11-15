@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Tag(name = "Consumers", description = "Endpoints for manager consumers data")
-@RequestMapping("consumers")
+@RequestMapping("/api/v1/consumers")
 public class ConsumerController {
 
     private final ConsumerUseCase service;
@@ -23,7 +23,7 @@ public class ConsumerController {
         this.service = consumerService;
     }
 
-    // TODO sobre ResponseEntity
+    // todo + sobre ResponseEntity
     @GetMapping
     @Operation(
         summary = "List all consumers",

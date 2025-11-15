@@ -22,10 +22,6 @@ public class Wallet {
         return new Wallet();
     }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
     public void debit(BigDecimal value) {
 
         if (!this.hasSufficientBalance(value)) {
