@@ -4,6 +4,8 @@ import com.payments.api.core.entities.payments.Payee;
 import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.vo.CNPJ;
 
+import java.math.BigDecimal;
+
 import static java.util.Objects.requireNonNull;
 
 public class Seller implements Payee {
@@ -39,7 +41,7 @@ public class Seller implements Payee {
     }
 
     @Override
-    public void credit(double value) {
+    public void credit(BigDecimal value) {
         this.wallet.credit(value);
     }
 

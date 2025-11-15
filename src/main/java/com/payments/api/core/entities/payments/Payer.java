@@ -1,7 +1,9 @@
 package com.payments.api.core.entities.payments;
 
+import java.math.BigDecimal;
+
 public interface Payer {
 
-    void debit(double value);
+    void debit(BigDecimal value);
 
 }

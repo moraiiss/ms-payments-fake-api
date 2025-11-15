@@ -2,6 +2,7 @@ package com.payments.api.repository.jpa.entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "wallets")
@@ -19,7 +20,7 @@ public class WalletEntity {
     private SellerEntity seller;
 
     @Column(nullable = false)
-    private double balance;
+    private BigDecimal balance;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -38,7 +39,7 @@ public class WalletEntity {
 
     public WalletEntity() {}
 
-    private WalletEntity(final double balance, final LocalDateTime createdAt, final ConsumerEntity consumer,
+    private WalletEntity(final BigDecimal balance, final LocalDateTime createdAt, final ConsumerEntity consumer,
                          final SellerEntity seller) {
         this.balance = balance;
         this.createdAt = createdAt;
@@ -47,10 +48,10 @@ public class WalletEntity {
     }
 
     public static WalletEntity of(final ConsumerEntity consumer) {
-        return new WalletEntity(0, LocalDateTime.now(), consumer, null);
+        return new WalletEntity(BigDecimal.ZERO, LocalDateTime.now(), consumer, null);
     }
 
     public static WalletEntity of(final SellerEntity seller) {
-        return new WalletEntity(0, LocalDateTime.now(), null, seller);
+        return new WalletEntity(BigDecimal.ZERO, LocalDateTime.now(), null, seller);
     }
 }
