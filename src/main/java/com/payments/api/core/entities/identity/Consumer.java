@@ -5,6 +5,8 @@ import com.payments.api.core.entities.payments.Payer;
 import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.vo.CPF;
 
+import java.math.BigDecimal;
+
 import static java.util.Objects.requireNonNull;
 
 public class Consumer implements Payer, Payee {
@@ -39,12 +41,12 @@ public class Consumer implements Payer, Payee {
     }
 
     @Override
-    public void credit(double value) {
+    public void credit(BigDecimal value) {
         this.wallet.credit(value);
     }
 
     @Override
-    public void debit(double value) {
+    public void debit(BigDecimal value) {
         this.wallet.debit(value);
     }
 

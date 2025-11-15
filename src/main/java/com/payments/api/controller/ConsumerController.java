@@ -3,7 +3,7 @@ package com.payments.api.controller;
 import com.payments.api.controller.dto.ConsumerRequestDto;
 import com.payments.api.controller.dto.ConsumerResponseDto;
 import com.payments.api.controller.mapper.ConsumerRestMapper;
-import com.payments.api.usecases.ConsumerUseCase;
+import com.payments.api.usecase.ConsumerUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

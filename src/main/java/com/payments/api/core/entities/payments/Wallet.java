@@ -2,19 +2,19 @@ package com.payments.api.core.entities.payments;
 
 import com.payments.api.core.exceptions.InsufficientBalanceException;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Wallet {
 
-    // TODO rever double x BigDecimal
-    private double balance;
+    private BigDecimal balance;
 
     private final LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
     private Wallet() {
-        this.balance = 0;
+        this.balance = BigDecimal.ZERO;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -22,26 +22,26 @@ public class Wallet {
         return new Wallet();
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void debit(double value) {
+    public void debit(BigDecimal value) {
 
         if (!this.hasSufficientBalance(value)) {
             throw new InsufficientBalanceException();
         }
 
-        this.balance -= value;
+        this.balance = this.balance.subtract(value);
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void credit(double value) {
-        this.balance += value;
+    public void credit(BigDecimal value) {
+        this.balance = this.balance.add(value);
         this.updatedAt = LocalDateTime.now();
     }
 
-    private boolean hasSufficientBalance(double value) {
-        return !(value > this.getBalance());
+    private boolean hasSufficientBalance(BigDecimal value) {
+        return !(this.balance.compareTo(value) < 0);
     }
 }
