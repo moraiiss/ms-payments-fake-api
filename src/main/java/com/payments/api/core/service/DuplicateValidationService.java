@@ -4,6 +4,7 @@ import com.payments.api.repository.ConsumerRepository;
 import com.payments.api.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
+// todo -> core domain "falando" com a camada repository ?
 @Service
 public class DuplicateValidationService {
 
@@ -16,17 +17,17 @@ public class DuplicateValidationService {
         this.consumerRepository = consumerRepository;
     }
 
-    public boolean isEmailValid(String emailAddress) {
+    public void isEmailValid(String emailAddress) {
         boolean sellerHasEmail = sellerRepository
             .findByEmail(emailAddress)
             .isPresent();
-
-        if (sellerHasEmail) return false;
 
         boolean consumerHasEmail = consumerRepository
             .findByEmail(emailAddress)
             .isPresent();
 
-        return !consumerHasEmail;
+        if (sellerHasEmail || consumerHasEmail) {
+            throw new IllegalArgumentException("There is already a user with this email.");
+        }
     }
 }
