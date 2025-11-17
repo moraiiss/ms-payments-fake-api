@@ -24,7 +24,7 @@ public class Wallet {
 
     public void debit(BigDecimal value) {
 
-        if (!this.hasSufficientBalance(value)) {
+        if (this.hasSufficientBalance(value)) {
             throw new InsufficientBalanceException();
         }
 
@@ -38,6 +38,6 @@ public class Wallet {
     }
 
     private boolean hasSufficientBalance(BigDecimal value) {
-        return !(this.balance.compareTo(value) < 0);
+        return this.balance.compareTo(value) > 0;
     }
 }

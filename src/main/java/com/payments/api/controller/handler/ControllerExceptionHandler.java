@@ -1,6 +1,7 @@
 package com.payments.api.controller.handler;
 
 import com.payments.api.core.exceptions.BusinessException;
+import com.payments.api.core.exceptions.InsufficientBalanceException;
 import com.payments.api.core.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -28,6 +29,11 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ProblemDetail handlerBusinessException(final BusinessException exception) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ProblemDetail handlerInsufficientBalanceException(final InsufficientBalanceException exception) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 }

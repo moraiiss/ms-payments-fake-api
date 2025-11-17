@@ -42,4 +42,10 @@ public class SellerRepository {
         return sellerJpaRepository.findByEmail(email)
             .map(SellerDbMapper::toDomain);
     }
+
+    public Seller findById(Long id) {
+        return sellerJpaRepository.findById(id)
+            .map(SellerDbMapper::toDomain)
+            .orElse(null);
+    }
 }

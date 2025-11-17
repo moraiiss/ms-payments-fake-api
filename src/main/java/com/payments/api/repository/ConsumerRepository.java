@@ -27,7 +27,7 @@ public class ConsumerRepository {
     public List<Consumer> findAll() {
         List<ConsumerEntity> consumers = consumerJpaRepository.findAll();
 
-        // TODO streams
+        // todo + sobre streams
         return consumers
             .stream()
             .map(ConsumerDbMapper::toDomain)
@@ -55,5 +55,12 @@ public class ConsumerRepository {
         return consumerJpaRepository
             .findByEmail(email)
             .map(ConsumerDbMapper::toDomain);
+    }
+
+    public Consumer findById(Long id) {
+        return consumerJpaRepository
+            .findById(id)
+            .map(ConsumerDbMapper::toDomain)
+            .orElse(null);
     }
 }

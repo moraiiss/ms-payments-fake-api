@@ -8,6 +8,6 @@ public final class SellerRestMapper {
     private SellerRestMapper() {}
 
     public static Seller toDomain(SellerRequestDto dto) {
-        return Seller.of(dto.socialReason(), dto.fantasyName(), dto.document(), dto.email(), dto.password());
+        return Seller.of(null, dto.socialReason(), dto.fantasyName(), dto.document(), dto.email(), dto.password());
     }
 }
