@@ -1,7 +1,6 @@
 package com.payments.api.repository.mapper;
 
 import com.payments.api.core.entities.payments.Payment;
-import com.payments.api.core.entities.payments.PaymentStatus;
 import com.payments.api.repository.jpa.entities.PaymentEntity;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ public final class PaymentDbMapper {
         return new PaymentEntity(
             Math.abs(UUID.randomUUID().getMostSignificantBits()),
             LocalDateTime.now(),
-            PaymentStatus.ON_HOLD,
             payment.getPayer(),
             payment.getPayee()
         );

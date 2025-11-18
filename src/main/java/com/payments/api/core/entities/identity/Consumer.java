@@ -36,6 +36,11 @@ public class Consumer implements Payer, Payee {
     }
 
     public static Consumer of(final java.lang.Long id, final String name, final String document, final String emailAddress,
+                              final String passwordKey, final Wallet wallet) {
+        return new Consumer(id, name, CPF.of(document), Credentials.of(emailAddress, passwordKey), wallet);
+    }
+
+    public static Consumer of(final java.lang.Long id, final String name, final String document, final String emailAddress,
                               final String passwordKey) {
         return new Consumer(id, name, CPF.of(document), Credentials.of(emailAddress, passwordKey), Wallet.of());
     }
@@ -67,4 +72,12 @@ public class Consumer implements Payer, Payee {
     }
 
     public String getPassword() { return credentials.getPassword(); }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public BigDecimal getBalance() {
+        return this.wallet.getBalance();
+    }
 }

@@ -1,6 +1,7 @@
 package com.payments.api.usecase;
 
 import com.payments.api.core.entities.identity.Consumer;
+import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.service.DuplicateValidationService;
 import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;

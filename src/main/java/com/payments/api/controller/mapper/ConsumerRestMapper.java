@@ -14,6 +14,6 @@ public final class ConsumerRestMapper {
 
     public static ConsumerResponseDto toDto(final Consumer consumer) {
         return new ConsumerResponseDto(consumer.getId(), consumer.getName(), consumer.getDocument(),
-            consumer.getEmail());
+            consumer.getEmail(), consumer.getBalance());
     }
 }
