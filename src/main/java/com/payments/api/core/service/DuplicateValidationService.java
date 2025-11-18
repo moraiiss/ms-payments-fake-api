@@ -4,7 +4,7 @@ import com.payments.api.repository.ConsumerRepository;
 import com.payments.api.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
-// todo -> core domain "falando" com a camada repository ?
+// todo -> camada core "falando" com a camada repository ?
 @Service
 public class DuplicateValidationService {
 

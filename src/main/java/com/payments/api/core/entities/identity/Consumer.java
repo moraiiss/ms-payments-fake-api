@@ -11,7 +11,7 @@ import static java.util.Objects.requireNonNull;
 
 public class Consumer implements Payer, Payee {
 
-    private final Long id;
+    private final java.lang.Long id;
 
     private final String name;
 
@@ -21,7 +21,7 @@ public class Consumer implements Payer, Payee {
 
     private final Wallet wallet;
 
-    private Consumer(final Long id, final String name, final CPF document, final Credentials credentials,
+    private Consumer(final java.lang.Long id, final String name, final CPF document, final Credentials credentials,
                      final Wallet wallet) {
         requireNonNull(name, "Name is required!");
         requireNonNull(document, "Document is required!");
@@ -35,7 +35,12 @@ public class Consumer implements Payer, Payee {
         this.wallet = wallet;
     }
 
-    public static Consumer of(final Long id, final String name, final String document, final String emailAddress,
+    public static Consumer of(final java.lang.Long id, final String name, final String document, final String emailAddress,
+                              final String passwordKey, final Wallet wallet) {
+        return new Consumer(id, name, CPF.of(document), Credentials.of(emailAddress, passwordKey), wallet);
+    }
+
+    public static Consumer of(final java.lang.Long id, final String name, final String document, final String emailAddress,
                               final String passwordKey) {
         return new Consumer(id, name, CPF.of(document), Credentials.of(emailAddress, passwordKey), Wallet.of());
     }
@@ -50,7 +55,7 @@ public class Consumer implements Payer, Payee {
         this.wallet.debit(value);
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return this.id;
     }
 
@@ -67,4 +72,12 @@ public class Consumer implements Payer, Payee {
     }
 
     public String getPassword() { return credentials.getPassword(); }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public BigDecimal getBalance() {
+        return this.wallet.getBalance();
+    }
 }

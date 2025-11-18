@@ -8,7 +8,7 @@ public final class SellerDbMapper {
     private SellerDbMapper() {}
 
     public static Seller toDomain(SellerEntity entity) {
-        return Seller.of(entity.getSocialReason(), entity.getFantasyName(), entity.getDocument(), entity.getEmail(),
+        return Seller.of(entity.getId(), entity.getSocialReason(), entity.getFantasyName(), entity.getDocument(), entity.getEmail(),
             entity.getPassword());
     }
 

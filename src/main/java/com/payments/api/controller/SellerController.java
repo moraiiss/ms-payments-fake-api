@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sellers")
+@RequestMapping("/api/v1/sellers")
 @Tag(name = "Sellers", description = "Endpoints for manager consumers data")
 public class SellerController {
 
