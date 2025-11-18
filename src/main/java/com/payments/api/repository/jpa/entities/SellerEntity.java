@@ -2,7 +2,6 @@ package com.payments.api.repository.jpa.entities;
 
 import jakarta.persistence.*;
 
-// TODO uso do lombok
 @Entity(name = "sellers")
 public class SellerEntity {
 
@@ -10,20 +9,22 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String socialReason;
 
     private String fantasyName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String document;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "wallet_id", nullable = false)
     private WalletEntity wallet;
 
     public SellerEntity() {}
@@ -37,8 +38,8 @@ public class SellerEntity {
         this.password = password;
     }
 
-    public void setWallet(WalletEntity wallet) {
-        this.wallet = wallet;
+    public Long getId() {
+        return id;
     }
 
     public String getSocialReason() {

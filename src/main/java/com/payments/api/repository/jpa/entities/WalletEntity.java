@@ -1,35 +1,35 @@
 package com.payments.api.repository.jpa.entities;
 
-import com.payments.api.core.entities.identity.Consumer;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "wallets")
 public class WalletEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "consumer_id", referencedColumnName = "id")
-    private ConsumerEntity consumer;
-
-    private double balance;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private BigDecimal balance;
 
     public WalletEntity() {}
 
-    private WalletEntity(final double balance, final LocalDateTime createdAt, final ConsumerEntity consumer) {
+    private WalletEntity(final BigDecimal balance) {
         this.balance = balance;
-        this.createdAt = createdAt;
-        this.consumer = consumer;
     }
 
-    public static WalletEntity withBalanceZero(final ConsumerEntity consumer) {
-        return new WalletEntity(0, LocalDateTime.now(), consumer);
+    public static WalletEntity of(final BigDecimal balance) {
+        return new WalletEntity(balance);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
     }
 }

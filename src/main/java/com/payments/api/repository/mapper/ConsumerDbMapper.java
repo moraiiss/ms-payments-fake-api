@@ -9,11 +9,11 @@ public final class ConsumerDbMapper {
 
     public static Consumer toDomain(ConsumerEntity entity) {
         return Consumer.of(entity.getId(), entity.getName(), entity.getDocument(), entity.getEmail(),
-            entity.getPassword());
+            entity.getPassword(), WalletDbMapper.toDomain(entity.getWallet()));
     }
 
     public static ConsumerEntity toEntity(Consumer consumer) {
         return new ConsumerEntity(consumer.getName(), consumer.getDocument(), consumer.getEmail(),
-            consumer.getPassword());
+            consumer.getPassword(), WalletDbMapper.toEntity(consumer.getWallet()));
     }
 }
