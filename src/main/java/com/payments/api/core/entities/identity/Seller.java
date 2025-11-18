@@ -4,9 +4,13 @@ import com.payments.api.core.entities.payments.Payee;
 import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.vo.CNPJ;
 
+import java.math.BigDecimal;
+
 import static java.util.Objects.requireNonNull;
 
 public class Seller implements Payee {
+
+    private final Long id;
 
     private final String socialReason;
 
@@ -18,13 +22,14 @@ public class Seller implements Payee {
 
     private final Wallet wallet;
 
-    private Seller(final String socialReason, final String fantasyName, final CNPJ document,
+    private Seller(final Long id, final String socialReason, final String fantasyName, final CNPJ document,
                    final Credentials credentials, final Wallet wallet) {
         requireNonNull(socialReason, "Social Reason is required");
         requireNonNull(document, "Document is required");
         requireNonNull(credentials, "Auth user data can't be null");
         requireNonNull(wallet, "Wallet data can't be null");
 
+        this.id = id;
         this.socialReason = socialReason;
         this.fantasyName = fantasyName;
         this.document = document;
@@ -32,15 +37,19 @@ public class Seller implements Payee {
         this.wallet = wallet;
     }
 
-    public static Seller of(final String socialReason, final String fantasyName, final String document, final String emailAddress,
-                              final String passwordKey) {
-        return new Seller(socialReason, fantasyName, CNPJ.of(document), Credentials.of(emailAddress, passwordKey),
+    public static Seller of(final Long id, final String socialReason, final String fantasyName, final String document,
+                            final String emailAddress, final String passwordKey) {
+        return new Seller(id, socialReason, fantasyName, CNPJ.of(document), Credentials.of(emailAddress, passwordKey),
             Wallet.of());
     }
 
     @Override
-    public void credit(double value) {
+    public void credit(BigDecimal value) {
         this.wallet.credit(value);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getSocialReason() {

@@ -31,7 +31,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:42.7.8")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

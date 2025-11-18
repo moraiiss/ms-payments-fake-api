@@ -3,7 +3,7 @@ package com.payments.api.controller;
 import com.payments.api.controller.dto.ConsumerRequestDto;
 import com.payments.api.controller.dto.ConsumerResponseDto;
 import com.payments.api.controller.mapper.ConsumerRestMapper;
-import com.payments.api.usecases.ConsumerUseCase;
+import com.payments.api.usecase.ConsumerUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @Tag(name = "Consumers", description = "Endpoints for manager consumers data")
-@RequestMapping("consumers")
+@RequestMapping("/api/v1/consumers")
 public class ConsumerController {
 
     private final ConsumerUseCase service;
@@ -23,7 +23,7 @@ public class ConsumerController {
         this.service = consumerService;
     }
 
-    // TODO sobre ResponseEntity
+    // todo + sobre ResponseEntity
     @GetMapping
     @Operation(
         summary = "List all consumers",

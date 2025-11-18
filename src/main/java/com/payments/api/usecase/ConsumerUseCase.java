@@ -1,6 +1,7 @@
-package com.payments.api.usecases;
+package com.payments.api.usecase;
 
 import com.payments.api.core.entities.identity.Consumer;
+import com.payments.api.core.entities.payments.Wallet;
 import com.payments.api.core.service.DuplicateValidationService;
 import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
@@ -34,11 +35,7 @@ public class ConsumerUseCase {
             throw new IllegalArgumentException("There is already a consumer with this document.");
         }
 
-        boolean emailIsValid = this.duplicateValidationService.isEmailValid(consumer.getEmail());
-
-        if (!emailIsValid) {
-            throw new IllegalArgumentException("There is already a user with this email.");
-        }
+        this.duplicateValidationService.isEmailValid(consumer.getEmail());
 
         return consumerRepository.save(consumer);
     }

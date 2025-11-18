@@ -15,22 +15,14 @@ public class SellerRepository {
 
     private final SellerJpaRepository sellerJpaRepository;
 
-    private final WalletJpaRepository walletJpaRepository;
-
-    public SellerRepository(final SellerJpaRepository sellerJpaRepository, final WalletJpaRepository walletJpaRepository) {
+    public SellerRepository(final SellerJpaRepository sellerJpaRepository) {
         this.sellerJpaRepository = sellerJpaRepository;
-        this.walletJpaRepository = walletJpaRepository;
     }
 
     public Long save(Seller seller) {
         SellerEntity sellerEntity = SellerDbMapper.toEntity(seller);
 
-        var wallet = WalletEntity.of(sellerEntity);
-        walletJpaRepository.save(wallet);
-
-        SellerEntity createdSeller = sellerJpaRepository.save(sellerEntity);
-
-        return createdSeller.getId();
+        return sellerJpaRepository.save(sellerEntity).getId();
     }
 
     public Optional<Seller> findSellerByDocument(String document) {
@@ -41,5 +33,11 @@ public class SellerRepository {
     public Optional<Seller> findByEmail(String email) {
         return sellerJpaRepository.findByEmail(email)
             .map(SellerDbMapper::toDomain);
+    }
+
+    public Seller findById(Long id) {
+        return sellerJpaRepository.findById(id)
+            .map(SellerDbMapper::toDomain)
+            .orElse(null);
     }
 }

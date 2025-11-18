@@ -2,7 +2,7 @@ package com.payments.api.controller;
 
 import com.payments.api.controller.dto.SellerRequestDto;
 import com.payments.api.controller.mapper.SellerRestMapper;
-import com.payments.api.usecases.SellerUseCase;
+import com.payments.api.usecase.SellerUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sellers")
+@RequestMapping("/api/v1/sellers")
 @Tag(name = "Sellers", description = "Endpoints for manager consumers data")
 public class SellerController {
 
