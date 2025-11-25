@@ -7,7 +7,7 @@ import com.payments.api.core.domain.identity.User;
 import com.payments.api.core.domain.vo.CPF;
 import com.payments.api.core.domain.vo.Email;
 import com.payments.api.core.domain.vo.Password;
-import com.payments.api.repository.jpa.entities.UserType;
+import com.payments.api.core.domain.identity.UserType;
 
 public final class CommonUserRestMapper {
 

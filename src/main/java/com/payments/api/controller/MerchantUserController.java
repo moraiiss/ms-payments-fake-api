@@ -4,7 +4,7 @@ import com.payments.api.controller.dto.request.MerchantUserRequestDto;
 import com.payments.api.controller.dto.response.MerchantUserResponseDto;
 import com.payments.api.controller.mapper.MerchantUserRestMapper;
 import com.payments.api.core.domain.identity.MerchantUser;
-import com.payments.api.usecase.MerchantUserUseCase;
+import com.payments.api.core.usecase.MerchantUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

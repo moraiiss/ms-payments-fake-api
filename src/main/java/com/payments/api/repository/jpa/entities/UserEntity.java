@@ -1,5 +1,6 @@
 package com.payments.api.repository.jpa.entities;
 
+import com.payments.api.core.domain.identity.UserType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

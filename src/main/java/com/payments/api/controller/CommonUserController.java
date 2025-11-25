@@ -4,7 +4,7 @@ import com.payments.api.controller.dto.request.CommonUserRequestDto;
 import com.payments.api.controller.dto.response.CommonUserResponseDto;
 import com.payments.api.controller.mapper.CommonUserRestMapper;
 import com.payments.api.core.domain.identity.CommonUser;
-import com.payments.api.usecase.CommonUserUseCase;
+import com.payments.api.core.usecase.CommonUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

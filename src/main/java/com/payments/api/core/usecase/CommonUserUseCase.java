@@ -1,4 +1,4 @@
-package com.payments.api.usecase;
+package com.payments.api.core.usecase;
 
 import com.payments.api.core.domain.identity.CommonUser;
 import com.payments.api.core.domain.identity.User;

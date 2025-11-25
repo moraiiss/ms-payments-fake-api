@@ -3,7 +3,6 @@ package com.payments.api.core.domain.identity;
 import com.payments.api.core.domain.payment.Wallet;
 import com.payments.api.core.domain.vo.Email;
 import com.payments.api.core.domain.vo.Password;
-import com.payments.api.repository.jpa.entities.UserType;
 
 import java.math.BigDecimal;
 import java.util.Objects;
