@@ -1,11 +1,17 @@
 package com.payments.api.repository.jpa.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity(name = "wallets")
+@Entity
+@Table(name = "wallets")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WalletEntity {
 
     @Id
@@ -15,21 +21,4 @@ public class WalletEntity {
     @Column(nullable = false)
     private BigDecimal balance;
 
-    public WalletEntity() {}
-
-    private WalletEntity(final BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public static WalletEntity of(final BigDecimal balance) {
-        return new WalletEntity(balance);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
 }

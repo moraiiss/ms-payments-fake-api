@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.5.6"
 	id("io.spring.dependency-management") version "1.1.7"
+    checkstyle
 }
 
 group = "com.payments-fake-api"
@@ -22,11 +23,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.6")
     implementation("org.springframework.boot:spring-boot-starter-web:3.5.6")
-
-//    implementation("org.springframework.boot:spring-boot-starter-actuator:3.5.6")
-//    implementation("io.micrometer:micrometer-registry-otlp:1.15.5")
+    implementation("org.springframework.security:spring-security-crypto:6.4.2")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 
     runtimeOnly("org.postgresql:postgresql:42.7.8")
 
@@ -37,4 +39,16 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion = "10.12.7"
+    configFile = rootProject.file("config/checkstyle.xml")
+    isIgnoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+tasks.named("check") {
+    dependsOn("checkstyle")
 }
