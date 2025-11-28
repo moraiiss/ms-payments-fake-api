@@ -18,16 +18,18 @@ public record Password(
         if (!isValidKey(key)) {
             throw new PasswordSecurityException();
         }
-
-        key = ENCODER.encode(key);
     }
 
+    public static Password of() {
+        String password = PasswordGenerator.generate();
+
+        return new Password(ENCODER.encode(password));
+    }
     public static Password of(final String key) {
         return new Password(key);
     }
 
     private boolean isValidKey(final String key) {
-
         boolean hasLength = key.length() > KEY_SIZE;
         boolean hasSpecialChar = key.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*");
         boolean hasUpperCase = key.matches(".*[A-Z].*");

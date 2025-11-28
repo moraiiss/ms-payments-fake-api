@@ -22,6 +22,14 @@ public class UserRepository {
         return UserDbMapper.toDomain(userEntity);
     }
 
+    public List<User> findAll() {
+        List<UserEntity> userEntityList = userJpaRepository.findAll();
+
+        return userEntityList.stream()
+            .map(UserDbMapper::toDomain)
+            .toList();
+    }
+
     public boolean findUserByEmail(final String email) {
         UserEntity user = userJpaRepository.findByEmail(email)
             .orElse(null);
@@ -29,11 +37,10 @@ public class UserRepository {
         return user != null;
     }
 
-    public List<User> findAll() {
-        List<UserEntity> userEntityList = userJpaRepository.findAll();
+    public boolean findUserByDocument(final String documentNumber) {
+        UserEntity user = userJpaRepository.findByDocument(documentNumber)
+            .orElse(null);
 
-        return userEntityList.stream()
-            .map(UserDbMapper::toDomain)
-            .toList();
+        return user != null;
     }
 }

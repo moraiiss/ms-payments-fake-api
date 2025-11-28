@@ -1,8 +1,8 @@
 package com.payments.api.repository.mapper;
 
 import com.payments.api.core.domain.entities.User;
-import com.payments.api.core.domain.vo.Email;
-import com.payments.api.core.domain.vo.Password;
+import com.payments.api.core.domain.entities.UserType;
+import com.payments.api.core.domain.vo.*;
 import com.payments.api.repository.jpa.entities.UserEntity;
 
 public final class UserDbMapper {
@@ -10,11 +10,15 @@ public final class UserDbMapper {
     private UserDbMapper() { }
 
     public static User toDomain(final UserEntity userEntity) {
+        Document document = userEntity.getUserType() == UserType.COMMON
+            ? CPF.of(userEntity.getDocument())
+            : CNPJ.of(userEntity.getDocument());
+
         return new User(
             userEntity.getId(),
             userEntity.getName(),
-            userEntity.getDocument(),
-            userEntity.getEmail(),
+            document,
+            Email.of(userEntity.getEmail()),
             Password.of(userEntity.getPassword()),
             userEntity.getUserType(),
             WalletDbMapper.toDomain(userEntity.getWallet())
@@ -25,8 +29,8 @@ public final class UserDbMapper {
         return new UserEntity(
             user.id(),
             user.name(),
-            user.document(),
-            user.email(),
+            user.getDocumentNumber(),
+            user.getEmailAddress(),
             user.password().key(),
             user.userType(),
             WalletDbMapper.toEntity(user.wallet())
