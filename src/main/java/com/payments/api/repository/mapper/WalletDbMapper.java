@@ -1,6 +1,6 @@
 package com.payments.api.repository.mapper;
 
-import com.payments.api.core.domain.payment.Wallet;
+import com.payments.api.core.domain.entities.Wallet;
 import com.payments.api.repository.jpa.entities.WalletEntity;
 
 public final class WalletDbMapper {

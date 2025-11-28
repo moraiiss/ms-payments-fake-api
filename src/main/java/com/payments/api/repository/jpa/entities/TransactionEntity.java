@@ -24,11 +24,11 @@ public class TransactionEntity {
     private LocalDateTime transactionDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id", nullable = false)
-    private UserEntity sender;
+    @JoinColumn(name = "payer_id", nullable = false)
+    private UserEntity payer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id", nullable = false)
-    private UserEntity receiver;
+    @JoinColumn(name = "payee_id", nullable = false)
+    private UserEntity payee;
 
 }
