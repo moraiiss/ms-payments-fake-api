@@ -1,6 +1,7 @@
 package com.payments.api.repository;
 
 import com.payments.api.core.domain.entities.User;
+import com.payments.api.core.domain.exceptions.NotFoundException;
 import com.payments.api.repository.jpa.UserJpaRepository;
 import com.payments.api.repository.jpa.entities.UserEntity;
 import com.payments.api.repository.mapper.UserDbMapper;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,5 +44,12 @@ public class UserRepository {
             .orElse(null);
 
         return user != null;
+    }
+
+    public User findUserById(final Long id) {
+        UserEntity userEntity = userJpaRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("User not found!"));
+
+        return UserDbMapper.toDomain(userEntity);
     }
 }

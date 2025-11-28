@@ -1,9 +1,6 @@
 package com.payments.api.controller.handler;
 
-import com.payments.api.core.domain.exceptions.ExistingDocumentException;
-import com.payments.api.core.domain.exceptions.ExistingEmailException;
-import com.payments.api.core.domain.exceptions.InvalidDocumentException;
-import com.payments.api.core.domain.exceptions.PasswordSecurityException;
+import com.payments.api.core.domain.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +26,17 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(PasswordSecurityException.class)
     public ProblemDetail handlePasswordSecurityException(final PasswordSecurityException exception) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+
+    @ExceptionHandler(NotFoundException.class)
+    public ProblemDetail handleNotFoundException(final NotFoundException exception) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
+    @ExceptionHandler(TransactionException.class)
+    public ProblemDetail handleTransactionException(final TransactionException exception) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
