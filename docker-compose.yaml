@@ -1,0 +1,59 @@
+services:
+
+  postgres:
+    image: postgres:18-alpine
+    container_name: payments-postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: payments
+    ports:
+      - "5432:5432"
+    networks:
+      - payments-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d payments"]
+      interval: 6s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: payments-app
+    ports:
+      - "8081:8081"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/payments
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: root
+#      SPRING_APPLICATION_NAME: ms-payments-fake-api
+#      SERVER_PORT: 8081
+    depends_on:
+      postgres:
+        # aguarda o serviço postgres estar saudável antes de iniciar
+        condition: service_healthy
+    networks:
+      - payments-network
+    # reinicia automaticamente o container em caso de falha
+    restart: unless-stopped
+
+#  auth-mock:
+#    image: mockoon/cli:latest
+#    container_name: payments-authorization-mock
+#    ports:
+#      - "3001:3001"
+#    volumes:
+#      - ./mock/auth-primary.json:/data:ro
+#    command: ["--data", "data", "--port", "3001"]
+
+
+volumes:
+  postgres-data:
+
+networks:
+  payments-network:
+    driver: bridge

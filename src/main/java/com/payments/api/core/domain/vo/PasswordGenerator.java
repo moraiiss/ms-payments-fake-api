@@ -2,15 +2,17 @@ package com.payments.api.core.domain.vo;
 
 import java.security.SecureRandom;
 
-public class PasswordGenerator {
+public final class PasswordGenerator {
 
     private static final int KEY_SIZE = 10; // tamanho mínimo da senha
-    private static final SecureRandom random = new SecureRandom();
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String DIGITS = "0123456789";
     private static final String SPECIAL = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?";
     private static final String ALL = UPPER + DIGITS + SPECIAL;
+
+    private PasswordGenerator() { }
 
     public static String generate() {
 
@@ -31,13 +33,13 @@ public class PasswordGenerator {
     }
 
     private static char randomChar(String chars) {
-        return chars.charAt(random.nextInt(chars.length()));
+        return chars.charAt(RANDOM.nextInt(chars.length()));
     }
 
     private static String shuffle(String input) {
         char[] arr = input.toCharArray();
         for (int i = arr.length - 1; i > 0; i--) {
-            int j = random.nextInt(i + 1);
+            int j = RANDOM.nextInt(i + 1);
             char temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;

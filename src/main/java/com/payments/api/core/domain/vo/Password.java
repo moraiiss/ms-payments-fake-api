@@ -25,6 +25,7 @@ public record Password(
 
         return new Password(ENCODER.encode(password));
     }
+
     public static Password of(final String key) {
         return new Password(key);
     }

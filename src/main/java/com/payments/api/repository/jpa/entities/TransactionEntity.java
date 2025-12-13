@@ -25,10 +25,10 @@ public class TransactionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payer_id", nullable = false)
-    private UserEntity payer;
+    private ConsumerEntity payer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payee_id", nullable = false)
-    private UserEntity payee;
+    private ConsumerEntity payee;
 
 }

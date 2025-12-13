@@ -7,14 +7,14 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: luiz.morais
-    password:
+    username: root
+    password: root
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: ${PAYMENTS_FAKE_DB_SHOW_SQL:true}
     open-in-view: false
     properties:
       hibernate:

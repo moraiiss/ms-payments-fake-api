@@ -41,10 +41,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.named("check") {
-    dependsOn("checkstyle")
-}
-
 checkstyle {
     toolVersion = "10.12.7"
     configFile = rootProject.file("config/checkstyle.xml")

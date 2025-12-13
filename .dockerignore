@@ -1,0 +1,57 @@
+# ============================================
+# .dockerignore
+# ============================================
+# Este arquivo especifica quais arquivos/diretórios devem ser ignorados
+# durante o processo de build do Docker, tornando-o mais rápido e eficiente
+
+# Diretório de build do Gradle
+build/
+
+# Diretório do Gradle daemon
+.gradle/
+
+# Arquivos de configuração do IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Docker
+Dockerfile
+docker-compose.yaml
+.dockerignore
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentação
+README.md
+docs/
+
+# Arquivos de mock
+mock/
+
+# Arquivos de autorização (segurança)
+*.json
+!gradle/
+

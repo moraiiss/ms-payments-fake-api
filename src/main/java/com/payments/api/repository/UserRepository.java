@@ -1,55 +1,54 @@
 package com.payments.api.repository;
 
-import com.payments.api.core.domain.entities.User;
+import com.payments.api.core.domain.entities.Consumer;
 import com.payments.api.core.domain.exceptions.NotFoundException;
-import com.payments.api.repository.jpa.UserJpaRepository;
-import com.payments.api.repository.jpa.entities.UserEntity;
-import com.payments.api.repository.mapper.UserDbMapper;
+import com.payments.api.repository.jpa.ConsumerJpaRepository;
+import com.payments.api.repository.jpa.entities.ConsumerEntity;
+import com.payments.api.repository.mapper.ConsumerDbMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
 
-    private final UserJpaRepository userJpaRepository;
+    private final ConsumerJpaRepository consumerJpaRepository;
 
-    public User create(final User user) {
-        UserEntity userEntity = userJpaRepository
-            .save(UserDbMapper.toEntity(user));
+    public Consumer create(final Consumer consumer) {
+        ConsumerEntity userEntity = consumerJpaRepository
+            .save(ConsumerDbMapper.toEntity(consumer));
 
-        return UserDbMapper.toDomain(userEntity);
+        return ConsumerDbMapper.toDomain(userEntity);
     }
 
-    public List<User> findAll() {
-        List<UserEntity> userEntityList = userJpaRepository.findAll();
+    public List<Consumer> findAll() {
+        List<ConsumerEntity> userEntityList = consumerJpaRepository.findAll();
 
         return userEntityList.stream()
-            .map(UserDbMapper::toDomain)
+            .map(ConsumerDbMapper::toDomain)
             .toList();
     }
 
     public boolean findUserByEmail(final String email) {
-        UserEntity user = userJpaRepository.findByEmail(email)
+        ConsumerEntity user = consumerJpaRepository.findByEmail(email)
             .orElse(null);
 
         return user != null;
     }
 
     public boolean findUserByDocument(final String documentNumber) {
-        UserEntity user = userJpaRepository.findByDocument(documentNumber)
+        ConsumerEntity user = consumerJpaRepository.findByDocument(documentNumber)
             .orElse(null);
 
         return user != null;
     }
 
-    public User findUserById(final Long id) {
-        UserEntity userEntity = userJpaRepository.findById(id)
+    public Consumer findUserById(final Long id) {
+        ConsumerEntity userEntity = consumerJpaRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("User not found!"));
 
-        return UserDbMapper.toDomain(userEntity);
+        return ConsumerDbMapper.toDomain(userEntity);
     }
 }

@@ -1,10 +1,10 @@
 {
   "uuid": "39f88369-6962-4622-a503-69624622a503",
   "lastMigration": 32,
-  "name": "Auth Service Mock",
+  "name": "Auth Primary Service Mock",
   "endpointPrefix": "",
   "latency": 0,
-  "port": 3000,
+  "port": 3001,
   "hostname": "0.0.0.0",
   "routes": [
     {

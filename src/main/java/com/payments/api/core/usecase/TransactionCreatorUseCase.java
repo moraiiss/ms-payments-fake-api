@@ -1,8 +1,7 @@
 package com.payments.api.core.usecase;
 
+import com.payments.api.core.domain.entities.Consumer;
 import com.payments.api.core.domain.entities.Transaction;
-import com.payments.api.core.domain.entities.User;
-import com.payments.api.core.domain.entities.UserType;
 import com.payments.api.core.domain.exceptions.TransactionException;
 import com.payments.api.core.service.WalletService;
 import com.payments.api.repository.UserRepository;
@@ -28,12 +27,12 @@ public class TransactionCreatorUseCase {
             throw new TransactionException("Transaction amount must be greater zero");
         }
 
-        User payer = userRepository.findUserById(transaction.payer());
-        User payee = userRepository.findUserById(transaction.payee());
+        Consumer payer = userRepository.findUserById(transaction.payer());
+        Consumer payee = userRepository.findUserById(transaction.payee());
 
-        if (payer.userType() == UserType.MERCHANT) {
-            throw new TransactionException("Payer can't be a merchant user!");
-        }
+//        if (payer.userType() == UserType.MERCHANT) {
+//            throw new TransactionException("Payer can't be a merchant user!");
+//        }
 
         if (payer.equals(payee)) {
             throw new TransactionException("Payer and payee can't be equals!");
