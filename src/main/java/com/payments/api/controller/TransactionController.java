@@ -18,7 +18,7 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<Transaction> store(@RequestBody Transaction requestTransaction) {
-        Transaction transaction = transactionCreatorUseCase.process(requestTransaction);
+        var transaction = transactionCreatorUseCase.create(requestTransaction);
 
         return ResponseEntity.ok(transaction);
     }

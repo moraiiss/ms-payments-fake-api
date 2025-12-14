@@ -1,6 +1,7 @@
 package com.payments.api.core.usecase;
 
 import com.payments.api.core.domain.entities.Consumer;
+import com.payments.api.core.domain.exceptions.ExistingDocumentException;
 import com.payments.api.core.service.UserValidatorService;
 import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class ConsumerCreatorUseCase {
 
     public Consumer create(final Consumer consumer) {
 
-        userValidatorService.validateConsumerDocument(consumer.getDocumentNumber());
+        boolean hasDocument = consumerRepository.findConsumerByDocument(consumer.getDocumentNumber());
+
+        if (hasDocument) {
+            throw new ExistingDocumentException();
+        }
 
         userValidatorService.validateEmail(consumer.getEmailAddress());
 

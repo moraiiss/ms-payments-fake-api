@@ -1,6 +1,5 @@
 package com.payments.api.core.service;
 
-import com.payments.api.core.domain.exceptions.ExistingDocumentException;
 import com.payments.api.core.domain.exceptions.ExistingEmailException;
 import com.payments.api.repository.ConsumerRepository;
 import com.payments.api.repository.SellerRepository;
@@ -21,30 +20,10 @@ public class UserValidatorService {
     public void validateEmail(final String emailAddress) {
 
         boolean hasSellerEmail = sellerRepository.findSellerByEmail(emailAddress);
-        boolean hasConsumerEmail = consumerRepository.findUserByEmail(emailAddress);
+        boolean hasConsumerEmail = consumerRepository.findConsumerByEmail(emailAddress);
 
         if (hasSellerEmail || hasConsumerEmail) {
             throw new ExistingEmailException();
         }
-    }
-
-    public void validateSellerDocument(final String document) {
-
-        boolean hasDocument = sellerRepository.findSellerByDocument(document);
-
-        if (hasDocument) {
-            throw new ExistingDocumentException();
-        }
-
-    }
-
-    public void validateConsumerDocument(final String document) {
-
-        boolean hasDocument = consumerRepository.findConsumerByDocument(document);
-
-        if (hasDocument) {
-            throw new ExistingDocumentException();
-        }
-
     }
 }

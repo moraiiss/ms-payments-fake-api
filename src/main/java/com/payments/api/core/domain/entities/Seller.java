@@ -2,6 +2,8 @@ package com.payments.api.core.domain.entities;
 
 import com.payments.api.core.domain.vo.CNPJ;
 
+import java.math.BigDecimal;
+
 public record Seller(
     Long id,
     String socialReason,
@@ -9,7 +11,7 @@ public record Seller(
     CNPJ document,
     User user,
     Wallet wallet
-) {
+) implements Payee {
     public static Seller of(final Long id, final String socialReason, final String fantasyName,
                             final String document, final String email, final String password, final Wallet wallet) {
         return new Seller(id, socialReason, fantasyName, CNPJ.of(document), User.of(email, password), wallet);
@@ -30,5 +32,10 @@ public record Seller(
 
     public String getPassword() {
         return user.getPassword();
+    }
+
+    @Override
+    public Wallet credit(final BigDecimal amount) {
+        return wallet.credit(amount);
     }
 }

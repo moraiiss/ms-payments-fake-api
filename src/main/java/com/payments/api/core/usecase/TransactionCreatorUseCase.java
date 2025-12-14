@@ -1,50 +1,62 @@
 package com.payments.api.core.usecase;
 
-import com.payments.api.core.domain.entities.Consumer;
+import com.payments.api.core.domain.entities.Payee;
+import com.payments.api.core.domain.entities.Payer;
 import com.payments.api.core.domain.entities.Transaction;
-import com.payments.api.core.domain.exceptions.TransactionException;
-import com.payments.api.core.service.WalletService;
+import com.payments.api.core.domain.exceptions.NotFoundException;
 import com.payments.api.repository.ConsumerRepository;
+import com.payments.api.repository.SellerRepository;
+import com.payments.api.repository.WalletRepository;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class TransactionCreatorUseCase {
 
     private final ConsumerRepository consumerRepository;
 
-    private final WalletService walletService;
+    private final SellerRepository sellerRepository;
 
-    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository, final WalletService walletService) {
+    private final WalletRepository walletRepository;
+
+    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository,
+                                     final SellerRepository sellerRepository, final WalletRepository walletRepository) {
         this.consumerRepository = consumerRepository;
-        this.walletService = walletService;
+        this.sellerRepository = sellerRepository;
+        this.walletRepository = walletRepository;
     }
 
-    public Transaction process(Transaction transaction) {
+    public Transaction create(final Transaction transaction) {
 
-        if (transaction.amount().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new TransactionException("Transaction amount must be greater zero");
-        }
+        Payer payer = findPayer(transaction.payer());
+        Payee payee = findPayee(transaction.payee());
 
-        Consumer payer = consumerRepository.findUserById(transaction.payer());
-        Consumer payee = consumerRepository.findUserById(transaction.payee());
-
-//        if (payer.userType() == UserType.MERCHANT) {
-//            throw new TransactionException("Payer can't be a merchant user!");
-//        }
-
-        if (payer.equals(payee)) {
-            throw new TransactionException("Payer and payee can't be equals!");
-        }
-
-        walletService.execute(
-            transaction.amount(),
-            payer.wallet(),
-            payee.wallet()
-        );
+        walletRepository.save(payer.debit(transaction.amount()));
+        walletRepository.save(payee.credit(transaction.amount()));
 
         return transaction;
     }
 
+    private Payer findPayer(final Long payerId) {
+        Payer payer = consumerRepository.findConsumerById(payerId);
+
+        if (payer == null) {
+            throw new NotFoundException("Payer not found");
+        }
+
+        return payer;
+    }
+
+    private Payee findPayee(final Long payeeId) {
+        Payee payee = sellerRepository.findSellerById(payeeId);
+
+        if (payee == null) {
+            payee = consumerRepository.findConsumerById(payeeId);
+        }
+
+        if (payee == null) {
+            throw new NotFoundException("Payee not found");
+        }
+
+        return payee;
+    }
 }

@@ -1,6 +1,7 @@
 package com.payments.api.core.usecase;
 
 import com.payments.api.core.domain.entities.Seller;
+import com.payments.api.core.domain.exceptions.ExistingDocumentException;
 import com.payments.api.core.service.UserValidatorService;
 import com.payments.api.repository.SellerRepository;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,13 @@ public class SellerCreatorUseCase {
 
     public Seller create(final Seller seller) {
 
-        userValidatorService.validateEmail(seller.getEmailAddress());
+        boolean hasDocument = sellerRepository.findSellerByDocument(seller.getDocumentNumber());
 
-        userValidatorService.validateSellerDocument(seller.getDocumentNumber());
+        if (hasDocument) {
+            throw new ExistingDocumentException();
+        }
+
+        userValidatorService.validateEmail(seller.getEmailAddress());
 
         return sellerRepository.create(seller);
     }

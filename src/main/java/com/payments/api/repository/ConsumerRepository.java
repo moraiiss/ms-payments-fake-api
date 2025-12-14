@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class ConsumerRepository {
             .toList();
     }
 
-    public boolean findUserByEmail(final String email) {
+    public boolean findConsumerByEmail(final String email) {
         ConsumerEntity user = consumerJpaRepository.findByEmail(email)
             .orElse(null);
 
@@ -45,10 +46,11 @@ public class ConsumerRepository {
         return user != null;
     }
 
-    public Consumer findUserById(final Long id) {
-        ConsumerEntity userEntity = consumerJpaRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException("User not found!"));
+    public Consumer findConsumerById(final Long id) {
+        Optional<ConsumerEntity> consumer = consumerJpaRepository.findById(id);
 
-        return ConsumerDbMapper.toDomain(userEntity);
+        return consumer
+            .map(ConsumerDbMapper::toDomain)
+            .orElse(null);
     }
 }

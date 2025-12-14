@@ -7,6 +7,8 @@ import com.payments.api.repository.mapper.SellerDbMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class SellerRepository {
@@ -28,9 +30,18 @@ public class SellerRepository {
     }
 
     public boolean findSellerByEmail(final String email) {
-        SellerEntity user = sellerJpaRepository.findByEmail(email)
+        SellerEntity seller = sellerJpaRepository.findByEmail(email)
             .orElse(null);
 
-        return user != null;
+        return seller != null;
+    }
+
+    public Seller findSellerById(final Long id) {
+        Optional<SellerEntity> seller = sellerJpaRepository.findById(id);
+
+        return seller
+            .map(SellerDbMapper::toDomain)
+            .orElse(null);
+
     }
 }

@@ -13,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: ${PAYMENTS_FAKE_DB_SHOW_SQL:true}
     open-in-view: false
     properties:
