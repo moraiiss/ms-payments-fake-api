@@ -4,7 +4,7 @@ import com.payments.api.core.domain.entities.Consumer;
 import com.payments.api.core.domain.entities.Transaction;
 import com.payments.api.core.domain.exceptions.TransactionException;
 import com.payments.api.core.service.WalletService;
-import com.payments.api.repository.UserRepository;
+import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,12 +12,12 @@ import java.math.BigDecimal;
 @Service
 public class TransactionCreatorUseCase {
 
-    private final UserRepository userRepository;
+    private final ConsumerRepository consumerRepository;
 
     private final WalletService walletService;
 
-    public TransactionCreatorUseCase(final UserRepository userRepository, final WalletService walletService) {
-        this.userRepository = userRepository;
+    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository, final WalletService walletService) {
+        this.consumerRepository = consumerRepository;
         this.walletService = walletService;
     }
 
@@ -27,8 +27,8 @@ public class TransactionCreatorUseCase {
             throw new TransactionException("Transaction amount must be greater zero");
         }
 
-        Consumer payer = userRepository.findUserById(transaction.payer());
-        Consumer payee = userRepository.findUserById(transaction.payee());
+        Consumer payer = consumerRepository.findUserById(transaction.payer());
+        Consumer payee = consumerRepository.findUserById(transaction.payee());
 
 //        if (payer.userType() == UserType.MERCHANT) {
 //            throw new TransactionException("Payer can't be a merchant user!");

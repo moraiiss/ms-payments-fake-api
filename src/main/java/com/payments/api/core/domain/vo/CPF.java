@@ -4,7 +4,7 @@ import com.payments.api.core.domain.exceptions.InvalidDocumentException;
 
 import static java.util.Objects.requireNonNull;
 
-public record CPF(String number) implements Document {
+public record CPF(String number) {
 
     private static final int CPF_LENGTH = 11;
     private static final int CPF_REPEATED_PATTERN_LENGTH = 10;
@@ -31,7 +31,7 @@ public record CPF(String number) implements Document {
         return new CPF(number);
     }
 
-    @Override
+
     public boolean isValid(final String cpf) {
 
         String number = cpf.replaceAll("[^0-9]", "");
@@ -74,7 +74,7 @@ public record CPF(String number) implements Document {
         }
     }
 
-    @Override
+
     public String getNumber() {
         return number;
     }

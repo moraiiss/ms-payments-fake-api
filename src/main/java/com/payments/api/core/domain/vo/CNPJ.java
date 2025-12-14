@@ -4,7 +4,7 @@ import com.payments.api.core.domain.exceptions.InvalidDocumentException;
 
 import static java.util.Objects.requireNonNull;
 
-public record CNPJ(String number) implements Document {
+public record CNPJ(String number) {
 
     private static final int CNPJ_LENGTH = 14;
     private static final int CNPJ_REPEATED_PATTERN_LENGTH = 13;
@@ -29,7 +29,6 @@ public record CNPJ(String number) implements Document {
         return new CNPJ(number);
     }
 
-    @Override
     public boolean isValid(final String cnpj) {
 
         String number = cnpj.replaceAll("[^0-9]", "");
@@ -68,7 +67,6 @@ public record CNPJ(String number) implements Document {
         }
     }
 
-    @Override
     public String getNumber() {
         return number;
     }

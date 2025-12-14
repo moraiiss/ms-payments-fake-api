@@ -1,7 +1,7 @@
 package com.payments.api.core.usecase;
 
 import com.payments.api.core.domain.entities.Consumer;
-import com.payments.api.repository.UserRepository;
+import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public class GetConsumerUseCase {
 
-    private final UserRepository userRepository;
+    private final ConsumerRepository consumerRepository;
 
-    public GetConsumerUseCase(final UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public GetConsumerUseCase(final ConsumerRepository consumerRepository) {
+        this.consumerRepository = consumerRepository;
     }
 
     public List<Consumer> getAll() {
-        return userRepository.findAll();
+        return consumerRepository.findAll();
     }
 }

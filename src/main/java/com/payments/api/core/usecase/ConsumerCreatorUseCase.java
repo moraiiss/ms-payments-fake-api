@@ -1,35 +1,29 @@
 package com.payments.api.core.usecase;
 
 import com.payments.api.core.domain.entities.Consumer;
-import com.payments.api.core.domain.exceptions.ExistingDocumentException;
-import com.payments.api.core.domain.exceptions.ExistingEmailException;
-import com.payments.api.repository.UserRepository;
+import com.payments.api.core.service.UserValidatorService;
+import com.payments.api.repository.ConsumerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConsumerCreatorUseCase {
 
-    private final UserRepository userRepository;
+    private final ConsumerRepository consumerRepository;
 
-    public ConsumerCreatorUseCase(final UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final UserValidatorService userValidatorService;
+
+    public ConsumerCreatorUseCase(final ConsumerRepository consumerRepository,
+                                  final UserValidatorService userValidatorService) {
+        this.consumerRepository = consumerRepository;
+        this.userValidatorService = userValidatorService;
     }
 
     public Consumer create(final Consumer consumer) {
 
-        boolean hasEmail = userRepository.findUserByEmail(consumer.getEmailAddress());
+        userValidatorService.validateConsumerDocument(consumer.getDocumentNumber());
 
-        if (hasEmail) {
-            throw new ExistingEmailException();
-        }
+        userValidatorService.validateEmail(consumer.getEmailAddress());
 
-        boolean hasDocument = userRepository.findUserByDocument(consumer.getDocumentNumber());
-
-        if (hasDocument) {
-            throw new ExistingDocumentException();
-        }
-
-        return userRepository.create(consumer);
+        return consumerRepository.create(consumer);
     }
-
 }

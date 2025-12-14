@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class UserRepository {
+public class ConsumerRepository {
 
     private final ConsumerJpaRepository consumerJpaRepository;
 
@@ -38,7 +38,7 @@ public class UserRepository {
         return user != null;
     }
 
-    public boolean findUserByDocument(final String documentNumber) {
+    public boolean findConsumerByDocument(final String documentNumber) {
         ConsumerEntity user = consumerJpaRepository.findByDocument(documentNumber)
             .orElse(null);
 
