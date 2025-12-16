@@ -1,7 +1,6 @@
 package com.payments.api.repository;
 
 import com.payments.api.core.domain.entities.Consumer;
-import com.payments.api.core.domain.exceptions.NotFoundException;
 import com.payments.api.repository.jpa.ConsumerJpaRepository;
 import com.payments.api.repository.jpa.entities.ConsumerEntity;
 import com.payments.api.repository.mapper.ConsumerDbMapper;

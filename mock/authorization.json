@@ -1,16 +1,16 @@
 {
   "uuid": "39f88369-6962-4622-a503-69624622a503",
-  "lastMigration": 32,
-  "name": "Auth Primary Service Mock",
+  "lastMigration": 33,
+  "name": "Auth Service Mock",
   "endpointPrefix": "",
   "latency": 0,
-  "port": 3001,
+  "port": 3002,
   "hostname": "0.0.0.0",
   "routes": [
     {
       "uuid": "48f88369-6962-4622-a503-69624622a504",
       "documentation": "Auth endpoint",
-      "method": "post",
+      "method": "get",
       "endpoint": "auth",
       "responses": [
         {
@@ -31,7 +31,11 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": false,
+          "bodyType": "INLINE",
+          "databucketID": "",
+          "crudKey": "id",
+          "callbacks": []
         },
         {
           "uuid": "69f88369-6962-4622-a503-69624622a506",
@@ -51,11 +55,17 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": false,
+          "bodyType": "INLINE",
+          "databucketID": "",
+          "crudKey": "id",
+          "callbacks": []
         }
       ],
-      "enabled": true,
-      "responseMode": "RANDOM"
+      "responseMode": "RANDOM",
+      "streamingMode": null,
+      "streamingInterval": 0,
+      "type": "http"
     }
   ],
   "proxyMode": false,
@@ -65,5 +75,27 @@
       "value": "application/json"
     }
   ],
-  "cors": true
+  "cors": true,
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "48f88369-6962-4622-a503-69624622a504"
+    }
+  ],
+  "folders": [],
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
 }

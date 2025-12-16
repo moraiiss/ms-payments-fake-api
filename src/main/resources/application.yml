@@ -19,3 +19,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+client:
+  authorization:
+    url: http://localhost:3001

@@ -4,6 +4,9 @@ import com.payments.api.core.domain.entities.Payee;
 import com.payments.api.core.domain.entities.Payer;
 import com.payments.api.core.domain.entities.Transaction;
 import com.payments.api.core.domain.exceptions.NotFoundException;
+import com.payments.api.core.domain.exceptions.TransactionException;
+import com.payments.api.http.AuthorizationClient;
+import com.payments.api.http.dto.AuthorizationResponseDto;
 import com.payments.api.repository.ConsumerRepository;
 import com.payments.api.repository.SellerRepository;
 import com.payments.api.repository.WalletRepository;
@@ -18,17 +21,26 @@ public class TransactionCreatorUseCase {
 
     private final WalletRepository walletRepository;
 
-    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository,
-                                     final SellerRepository sellerRepository, final WalletRepository walletRepository) {
+    private final AuthorizationClient authorizationClient;
+
+    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository, final SellerRepository sellerRepository,
+                                     final WalletRepository walletRepository, final AuthorizationClient authorizationClient) {
         this.consumerRepository = consumerRepository;
         this.sellerRepository = sellerRepository;
         this.walletRepository = walletRepository;
+        this.authorizationClient = authorizationClient;
     }
 
     public Transaction create(final Transaction transaction) {
 
         Payer payer = findPayer(transaction.payer());
         Payee payee = findPayee(transaction.payee());
+
+        AuthorizationResponseDto isAuthorized = authorizationClient.authorize();
+
+        if (!isAuthorized.authorized()) {
+            throw new TransactionException("Transaction not authorized!");
+        }
 
         walletRepository.save(payer.debit(transaction.amount()));
         walletRepository.save(payee.credit(transaction.amount()));

@@ -26,12 +26,6 @@ services:
     container_name: payments-app
     ports:
       - "8081:8081"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/payments
-#      SPRING_DATASOURCE_USERNAME: root
-#      SPRING_DATASOURCE_PASSWORD: root
-#      SPRING_APPLICATION_NAME: ms-payments-fake-api
-#      SERVER_PORT: 8081
     depends_on:
       postgres:
         # aguarda o serviço postgres estar saudável antes de iniciar
@@ -41,14 +35,14 @@ services:
     # reinicia automaticamente o container em caso de falha
     restart: unless-stopped
 
-#  auth-mock:
-#    image: mockoon/cli:latest
-#    container_name: payments-authorization-mock
-#    ports:
-#      - "3001:3001"
-#    volumes:
-#      - ./mock/auth-primary.json:/data:ro
-#    command: ["--data", "data", "--port", "3001"]
+  auth-mock:
+    image: mockoon/cli:latest
+    container_name: payments-authorization-mock
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./mock/authorization.json:/data:ro
+    command: ["--data", "data", "--port", "3001"]
 
 
 volumes:

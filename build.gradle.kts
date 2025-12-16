@@ -27,6 +27,8 @@ dependencies {
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
+
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")
 
