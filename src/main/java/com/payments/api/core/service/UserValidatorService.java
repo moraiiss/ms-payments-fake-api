@@ -1,11 +1,9 @@
 package com.payments.api.core.service;
 
+import com.payments.api.adapters.output.db.ConsumerRepository;
+import com.payments.api.adapters.output.db.SellerRepository;
 import com.payments.api.core.domain.exceptions.ExistingEmailException;
-import com.payments.api.repository.ConsumerRepository;
-import com.payments.api.repository.SellerRepository;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UserValidatorService {
 
     private final SellerRepository sellerRepository;

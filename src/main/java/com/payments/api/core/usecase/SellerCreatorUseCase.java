@@ -1,13 +1,14 @@
 package com.payments.api.core.usecase;
 
-import com.payments.api.core.domain.entities.Seller;
+import com.payments.api.core.domain.entities.identity.Seller;
 import com.payments.api.core.domain.exceptions.ExistingDocumentException;
+import com.payments.api.core.ports.input.SellerCreatorPort;
 import com.payments.api.core.service.UserValidatorService;
-import com.payments.api.repository.SellerRepository;
+import com.payments.api.adapters.output.db.SellerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SellerCreatorUseCase {
+public class SellerCreatorUseCase implements SellerCreatorPort {
 
     private final SellerRepository sellerRepository;
 
@@ -19,6 +20,7 @@ public class SellerCreatorUseCase {
         this.userValidatorService = userValidatorService;
     }
 
+    @Override
     public Seller create(final Seller seller) {
 
         boolean hasDocument = sellerRepository.findSellerByDocument(seller.getDocumentNumber());

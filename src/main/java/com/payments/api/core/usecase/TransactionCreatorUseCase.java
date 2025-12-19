@@ -1,55 +1,60 @@
 package com.payments.api.core.usecase;
 
-import com.payments.api.core.domain.entities.Payee;
-import com.payments.api.core.domain.entities.Payer;
-import com.payments.api.core.domain.entities.Transaction;
+import com.payments.api.adapters.output.feign.client.AuthorizationResponseDto;
+import com.payments.api.core.domain.entities.identity.Payee;
+import com.payments.api.core.domain.entities.identity.Payer;
+import com.payments.api.core.domain.entities.payment.Transaction;
 import com.payments.api.core.domain.exceptions.NotFoundException;
 import com.payments.api.core.domain.exceptions.TransactionException;
-import com.payments.api.http.AuthorizationClient;
-import com.payments.api.http.dto.AuthorizationResponseDto;
-import com.payments.api.repository.ConsumerRepository;
-import com.payments.api.repository.SellerRepository;
-import com.payments.api.repository.WalletRepository;
+import com.payments.api.core.ports.input.TransactionCreatorPort;
+import com.payments.api.core.ports.output.AuthorizationClientPort;
+import com.payments.api.core.ports.output.ConsumerRepositoryPort;
+import com.payments.api.core.ports.output.SellerRepositoryPort;
+import com.payments.api.core.ports.output.WalletRepositoryPort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionCreatorUseCase {
+public class TransactionCreatorUseCase implements TransactionCreatorPort {
 
-    private final ConsumerRepository consumerRepository;
+    private final ConsumerRepositoryPort consumerRepositoryPort;
 
-    private final SellerRepository sellerRepository;
+    private final SellerRepositoryPort sellerRepositoryPort;
 
-    private final WalletRepository walletRepository;
+    private final WalletRepositoryPort walletRepositoryPort;
 
-    private final AuthorizationClient authorizationClient;
+    private final AuthorizationClientPort authorizationClientPort;
 
-    public TransactionCreatorUseCase(final ConsumerRepository consumerRepository, final SellerRepository sellerRepository,
-                                     final WalletRepository walletRepository, final AuthorizationClient authorizationClient) {
-        this.consumerRepository = consumerRepository;
-        this.sellerRepository = sellerRepository;
-        this.walletRepository = walletRepository;
-        this.authorizationClient = authorizationClient;
+    public TransactionCreatorUseCase(final ConsumerRepositoryPort consumerRepositoryPort,
+                                     final SellerRepositoryPort sellerRepositoryPort,
+                                     final WalletRepositoryPort walletRepositoryPort,
+                                     final AuthorizationClientPort authorizationClientPort) {
+        this.consumerRepositoryPort = consumerRepositoryPort;
+        this.sellerRepositoryPort = sellerRepositoryPort;
+        this.walletRepositoryPort = walletRepositoryPort;
+        this.authorizationClientPort = authorizationClientPort;
     }
 
+    // SRP violation
+    @Override
     public Transaction create(final Transaction transaction) {
 
         Payer payer = findPayer(transaction.payer());
         Payee payee = findPayee(transaction.payee());
 
-        AuthorizationResponseDto isAuthorized = authorizationClient.authorize();
+        AuthorizationResponseDto isAuthorized = authorizationClientPort.authorize();
 
         if (!isAuthorized.authorized()) {
             throw new TransactionException("Transaction not authorized!");
         }
 
-        walletRepository.save(payer.debit(transaction.amount()));
-        walletRepository.save(payee.credit(transaction.amount()));
+        walletRepositoryPort.save(payer.debit(transaction.amount()));
+        walletRepositoryPort.save(payee.credit(transaction.amount()));
 
         return transaction;
     }
 
     private Payer findPayer(final Long payerId) {
-        Payer payer = consumerRepository.findConsumerById(payerId);
+        Payer payer = consumerRepositoryPort.findConsumerById(payerId);
 
         if (payer == null) {
             throw new NotFoundException("Payer not found");
@@ -59,10 +64,10 @@ public class TransactionCreatorUseCase {
     }
 
     private Payee findPayee(final Long payeeId) {
-        Payee payee = sellerRepository.findSellerById(payeeId);
+        Payee payee = sellerRepositoryPort.findSellerById(payeeId);
 
         if (payee == null) {
-            payee = consumerRepository.findConsumerById(payeeId);
+            payee = consumerRepositoryPort.findConsumerById(payeeId);
         }
 
         if (payee == null) {

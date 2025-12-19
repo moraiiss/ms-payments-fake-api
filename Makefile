@@ -23,3 +23,5 @@ builder:
 	./gradlew clean build
 
 restart: down builder up start
+
+init: builder up start
