@@ -1,12 +1,13 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.5.6"
-	id("io.spring.dependency-management") version "1.1.7"
     checkstyle
+
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 group = "com.payments-fake-api"
-version = "1.0.0"
+version = libs.versions.app
 description = "Project simulate payment api"
 
 java {
@@ -20,23 +21,16 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.6")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.5.6")
-    implementation("org.springframework.security:spring-security-crypto:6.4.2")
+	implementation(rootProject.libs.bundles.spring.starters)
+    implementation(rootProject.libs.bundles.spring.modules)
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+    compileOnly(rootProject.libs.project.lombok)
+    annotationProcessor(rootProject.libs.project.lombok)
 
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
+    runtimeOnly(rootProject.libs.postrgres.database)
 
-    compileOnly("org.projectlombok:lombok:1.18.42")
-    annotationProcessor("org.projectlombok:lombok:1.18.42")
-
-    runtimeOnly("org.postgresql:postgresql:42.7.8")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(rootProject.libs.bundles.spring.testers)
+    testRuntimeOnly(rootProject.libs.junit.platform.launcher)
 }
 
 tasks.withType<Test> {

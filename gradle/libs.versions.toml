@@ -1,0 +1,37 @@
+[versions]
+app = "1.0.0"
+spring = "3.5.6"
+spring-dependency = "1.1.7"
+spring-security = "6.4.2"
+springdoc-openapi = "2.8.13"
+spring-openfeign = "4.3.0"
+lombok = "1.18.42"
+postgres = "42.7.8"
+archunit = "1.4.1"
+checkstyle = "10.12.7"
+
+[libraries]
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+spring-security-crypto = { module = "org.springframework.security:spring-security-crypto", version.ref = "spring-security" }
+spring-cloud-starter-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign", version.ref = "spring-openfeign" }
+
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc-openapi" }
+
+project-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+postrgres-database = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+archunit-junit = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "archunit" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
+
+[bundles]
+spring-starters = ["spring-boot-starter", "spring-boot-starter-data-jpa", "spring-boot-starter-web"]
+spring-modules = ["spring-security-crypto", "springdoc-openapi-starter-webmvc-ui", "spring-cloud-starter-openfeign"]
+spring-testers = ["spring-boot-starter-test", "archunit-junit"]
