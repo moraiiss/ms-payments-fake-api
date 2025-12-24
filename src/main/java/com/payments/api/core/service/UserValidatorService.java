@@ -1,16 +1,18 @@
 package com.payments.api.core.service;
 
-import com.payments.api.adapters.output.db.ConsumerRepository;
-import com.payments.api.adapters.output.db.SellerRepository;
 import com.payments.api.core.domain.exceptions.ExistingEmailException;
+import com.payments.api.core.ports.input.UserValidatorServicePort;
+import com.payments.api.core.ports.output.ConsumerRepositoryPort;
+import com.payments.api.core.ports.output.SellerRepositoryPort;
 
-public class UserValidatorService {
+public class UserValidatorService implements UserValidatorServicePort {
 
-    private final SellerRepository sellerRepository;
+    private final SellerRepositoryPort sellerRepository;
 
-    private final ConsumerRepository consumerRepository;
+    private final ConsumerRepositoryPort consumerRepository;
 
-    public UserValidatorService(final SellerRepository sellerRepository, final ConsumerRepository consumerRepository) {
+    public UserValidatorService(final SellerRepositoryPort sellerRepository,
+                                final ConsumerRepositoryPort consumerRepository) {
         this.sellerRepository = sellerRepository;
         this.consumerRepository = consumerRepository;
     }

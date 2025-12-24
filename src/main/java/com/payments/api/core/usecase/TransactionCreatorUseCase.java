@@ -11,9 +11,7 @@ import com.payments.api.core.ports.output.AuthorizationClientPort;
 import com.payments.api.core.ports.output.ConsumerRepositoryPort;
 import com.payments.api.core.ports.output.SellerRepositoryPort;
 import com.payments.api.core.ports.output.WalletRepositoryPort;
-import org.springframework.stereotype.Service;
 
-@Service
 public class TransactionCreatorUseCase implements TransactionCreatorPort {
 
     private final ConsumerRepositoryPort consumerRepositoryPort;
